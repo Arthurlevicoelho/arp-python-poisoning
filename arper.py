@@ -7,7 +7,11 @@ import time
 
 # Função auxiliar para obter endereço MAC de qualquer maquina.
 def get_mac(target_ip):
-    pass
+    packet = Ether(dst='ff:ff:ff:ff:ff:ff')/ARP(op= "who-has", pdst=target_ip)
+    resp, _ = srp(packet,timeout=2, retry=10, verbose=False)
+    for _, r in resp:
+        return r[Ether].src
+    return None
 
 #Classe para envenenar, capturar e restaurar as configurações de redes
 class Arper:
