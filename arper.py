@@ -16,8 +16,19 @@ def get_mac(target_ip):
 #Classe para envenenar, capturar e restaurar as configurações de redes
 class Arper:
     def __init__(self, victim, gateway, interface='en0'):
-        pass
+        self.victim = victim
+        self.victim_mac = get_mac(victim)
+        self.gateway = gateway
+        self.gateway_mac = get_mac(gateway)
+        self.interface = interface
+        conf.iface = interface
+        conf.verb = 0
 
+        print(f'{interface} inicializada:')
+        print(f'Gateway ({gateway} está em {self.gateway_mac}).')
+        print(f'Vítima ({victim}) está em {self.victim_mac}')
+        print('-'*30)
+        
     def run(self):
         pass
 
